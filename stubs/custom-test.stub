@@ -1,0 +1,62 @@
+<?php
+
+use App\Models\{{ modelName }};
+use function Pest\Laravel\{delete, get, post};
+use function Pest\Laravel\{put};
+
+describe('{{ modelName }}', function () {
+    test('can index', function () {
+        $response = get('api/{{ routeName }}');
+
+        $response->assertStatus(200);
+    });
+
+    test('can create', function () {
+        $testPayload = {{ createTestPayload }};
+
+        $response = post('api/{{ routeName }}', $testPayload, [
+            'Accept' => 'application/json',
+        ]);
+
+        $response->assertStatus(201);
+
+        $responseData = $response->json();
+
+        expect($responseData)->toBe($testPayload);
+    });
+
+    test('can read', function () {
+        $id = {{ testPK }};
+        $response = get("api/{{ routeName }}/$id");
+
+        $response->assertStatus(200);
+    });
+
+    test('can update', function () {
+        $id = {{ testPK }};
+        $testPayload = {{ updateTestPayload }};
+
+        $response = put("api/{{ routeName }}/$id", $testPayload, [
+            'Accept' => 'application/json',
+        ]);
+
+        $response->assertStatus(200);
+
+        $responseData = $response->json();
+
+        expect($responseData)->toBe([
+            'CustomerID' => 'TESTCUST',
+            ...$testPayload
+        ]);
+    });
+
+    test('can delete', function () {
+        $id = {{ testPK }};
+
+        $response = delete("api/{{ routeName }}/$id", [
+            'Accept' => 'application/json',
+        ]);
+
+        $response->assertStatus(204);
+    });
+});

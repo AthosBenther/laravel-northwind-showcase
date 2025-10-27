@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\{{ modelName }}\Index;
+use App\Http\Requests\{{ modelName }}\Store;
+use App\Http\Requests\{{ modelName }}\Update;
+use App\Models\{{ modelName }};
+
+class {{ modelName }}Controller extends NorthwindController
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Index $request)
+    {
+        return {{ modelName }}::paginate($request->per_page ?? 5);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Store $request)
+    {
+        $model = {{ modelName }}::create($request->validated());
+
+        return $model;
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show({{ modelName }} $model)
+    {
+        return $model;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Update $request, {{ modelName }} $model)
+    {
+        $model->update($request->validated());
+
+        return $model;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy({{ modelName }} $model)
+    {
+        $model->delete();
+
+        return response()->noContent();
+    }
+}
