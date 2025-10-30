@@ -22,17 +22,18 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-  'CompanyName' => 'nullable|string',
-  'ContactName' => 'required|string',
-  'ContactTitle' => 'required|string',
-  'Address' => 'required|string',
-  'City' => 'required|string',
-  'Region' => 'required|string',
-  'PostalCode' => 'required|string',
-  'Country' => 'required|string',
-  'Phone' => 'required|string',
-  'Fax' => 'required|string',
-  'HomePage' => 'required|string',
-];
+            'SupplierID' => 'prohibited',
+            'CompanyName' => 'string',
+            'ContactName' => 'nullable|string',
+            'ContactTitle' => 'nullable|string',
+            'Address' => 'nullable|string',
+            'City' => 'nullable|string',
+            'Region' => 'nullable|string',
+            'PostalCode' => 'nullable|string',
+            'Country' => 'nullable|string',
+            'Phone' => 'nullable|string',
+            'Fax' => 'nullable|string',
+            'HomePage' => 'nullable|string',
+        ];
     }
 }

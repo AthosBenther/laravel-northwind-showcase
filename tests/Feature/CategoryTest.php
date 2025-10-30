@@ -1,22 +1,21 @@
 <?php
 
-use App\Models\Category;
 use function Pest\Laravel\{delete, get, post};
 use function Pest\Laravel\{put};
 
-describe('Category', function () {
+$testingId = null;
+
+describe('Category', function () use (&$testingId) {
     test('can index', function () {
         $response = get('api/categories');
 
         $response->assertStatus(200);
     });
 
-    test('can create', function () {
+    test('can create', function () use (&$testingId) {
         $testPayload = [
-            'CategoryID' => 'TESTDATA',
-            'CategoryName' => fake()->word(),
-            'Description' => fake()->sentence(),
-            'Picture' => '',
+            'CategoryName' =>  fake()->sentence(),
+            'Description' =>  fake()->sentence(),
         ];
 
         $response = post('api/categories', $testPayload, [
@@ -27,25 +26,25 @@ describe('Category', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe($testPayload);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
+        $testingId = $responseData['Category'.'ID'];
     });
 
-    test('can read', function () {
-        $id = 'TESTPK';
-        $response = get("api/categories/$id");
+    test('can read', function () use (&$testingId) {
+        $response = get("api/categories/$testingId");
 
         $response->assertStatus(200);
+        $responseData = $response->json();
+        expect($responseData)->not()->toBe([]);
     });
 
-    test('can update', function () {
-        $id = 'TESTPK';
+    test('can update', function () use (&$testingId) {
         $testPayload = [
-            'CategoryName' => fake()->word(),
-            'Description' => fake()->sentence(),
-            'Picture' => '',
+            'CategoryName' =>  fake()->sentence(),
+            'Description' =>  fake()->sentence(),
         ];
 
-        $response = put("api/categories/$id", $testPayload, [
+        $response = put("api/categories/$testingId", $testPayload, [
             'Accept' => 'application/json',
         ]);
 
@@ -53,16 +52,13 @@ describe('Category', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe([
-            'CustomerID' => 'TESTCUST',
-            ...$testPayload
-        ]);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
     });
 
-    test('can delete', function () {
+    test('can delete', function () use (&$testingId) {
         $id = 'TESTPK';
 
-        $response = delete("api/categories/$id", [
+        $response = delete("api/categories/$testingId", [
             'Accept' => 'application/json',
         ]);
 

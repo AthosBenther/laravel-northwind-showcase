@@ -22,35 +22,35 @@ class CategoryController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Category::create($request->validated());
+        $category = Category::create($request->validated());
 
-        return $model;
+        return $category;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $model)
+    public function show(Category $category)
     {
-        return $model;
+        return $category;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Category $model)
+    public function update(Update $request, Category $category)
     {
-        $model->update($request->validated());
+        $category->update($request->validated());
 
-        return $model;
+        return $category;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $model)
+    public function destroy(Category $category)
     {
-        $model->delete();
+        $category->delete();
 
         return response()->noContent();
     }

@@ -2,23 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Product extends NorthwindModel
 {
     protected $primaryKey = 'ProductID' ;
-    protected $fillable = 
+    protected $table = 'Products';
+    protected $fillable =
         [
-    "ProductID",
-    "ProductName",
-    "SupplierID",
-    "CategoryID",
-    "QuantityPerUnit",
-    "UnitPrice",
-    "UnitsInStock",
-    "UnitsOnOrder",
-    "ReorderLevel",
-    "Discontinued"
-]
+            'ProductID',
+            'ProductName',
+            'SupplierID',
+            'CategoryID',
+            'QuantityPerUnit',
+            'UnitPrice',
+            'UnitsInStock',
+            'UnitsOnOrder',
+            'ReorderLevel',
+            'Discontinued',
+        ]
+    ;
+
+    protected $casts =
+        [
+            'SupplierID' => 'integer',
+            'CategoryID' => 'integer',
+            'UnitsInStock' => 'integer',
+            'UnitsOnOrder' => 'integer',
+            'ReorderLevel' => 'integer',
+        ]
     ;
 }

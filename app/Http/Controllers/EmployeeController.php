@@ -22,35 +22,35 @@ class EmployeeController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Employee::create($request->validated());
+        $employee = Employee::create($request->validated());
 
-        return $model;
+        return $employee;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Employee $model)
+    public function show(Employee $employee)
     {
-        return $model;
+        return $employee;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Employee $model)
+    public function update(Update $request, Employee $employee)
     {
-        $model->update($request->validated());
+        $employee->update($request->validated());
 
-        return $model;
+        return $employee;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $model)
+    public function destroy(Employee $employee)
     {
-        $model->delete();
+        $employee->delete();
 
         return response()->noContent();
     }

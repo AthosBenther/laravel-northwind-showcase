@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Territory extends NorthwindModel
 {
     protected $primaryKey = 'TerritoryID' ;
-    protected $fillable = 
+    protected $table = 'Territories';
+    protected $fillable =
         [
-    "TerritoryID",
-    "TerritoryDescription",
-    "RegionID"
-]
+            'TerritoryID',
+            'TerritoryDescription',
+            'RegionID',
+        ]
+    ;
+
+    protected $casts =
+        [
+            'RegionID' => 'integer',
+        ]
     ;
 }

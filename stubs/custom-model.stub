@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class {{ className }} extends NorthwindModel
 {
     protected $primaryKey = '{{ primaryKey }}' ;
+    protected $table = '{{ table }}';
     protected $fillable = 
         {{ fillable }}
+    ;
+
+    protected $casts = 
+        {{ casts }}
     ;
 }

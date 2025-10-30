@@ -22,35 +22,35 @@ class OrderDetailController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = OrderDetail::create($request->validated());
+        $orderDetail = OrderDetail::create($request->validated());
 
-        return $model;
+        return $orderDetail;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(OrderDetail $model)
+    public function show(OrderDetail $orderDetail)
     {
-        return $model;
+        return $orderDetail;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, OrderDetail $model)
+    public function update(Update $request, OrderDetail $orderDetail)
     {
-        $model->update($request->validated());
+        $orderDetail->update($request->validated());
 
-        return $model;
+        return $orderDetail;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderDetail $model)
+    public function destroy(OrderDetail $orderDetail)
     {
-        $model->delete();
+        $orderDetail->delete();
 
         return response()->noContent();
     }

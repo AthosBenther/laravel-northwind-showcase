@@ -22,8 +22,9 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-  'CompanyName' => 'nullable|string',
-  'Phone' => 'required|string',
-];
+            'ShipperID' => 'prohibited',
+            'CompanyName' => 'string',
+            'Phone' => 'nullable|string',
+        ];
     }
 }

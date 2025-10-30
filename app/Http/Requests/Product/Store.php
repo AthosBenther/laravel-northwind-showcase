@@ -22,15 +22,16 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-  'ProductName' => 'nullable|string',
-  'SupplierID' => 'required|integer',
-  'CategoryID' => 'required|integer',
-  'QuantityPerUnit' => 'required|string',
-  'UnitPrice' => 'required',
-  'UnitsInStock' => 'required|integer',
-  'UnitsOnOrder' => 'required|integer',
-  'ReorderLevel' => 'required|integer',
-  'Discontinued' => 'nullable|string',
-];
+            'ProductID' => 'prohibited',
+            'ProductName' => 'required|string',
+            'SupplierID' => 'nullable|integer',
+            'CategoryID' => 'nullable|integer',
+            'QuantityPerUnit' => 'nullable|string',
+            'UnitPrice' => 'nullable',
+            'UnitsInStock' => 'nullable|integer',
+            'UnitsOnOrder' => 'nullable|integer',
+            'ReorderLevel' => 'nullable|integer',
+            'Discontinued' => 'required|string',
+        ];
     }
 }

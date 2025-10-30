@@ -22,8 +22,9 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-  'TerritoryDescription' => 'nullable|string',
-  'RegionID' => 'nullable|integer',
-];
+            'TerritoryID' => 'prohibited',
+            'TerritoryDescription' => 'string',
+            'RegionID' => 'integer',
+        ];
     }
 }

@@ -22,9 +22,11 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-  'UnitPrice' => 'nullable',
-  'Quantity' => 'nullable|integer',
-  'Discount' => 'nullable|numeric',
-];
+            'OrderID' => 'prohibited',
+            'ProductID' => 'integer',
+            'UnitPrice' => '',
+            'Quantity' => 'integer',
+            'Discount' => 'numeric',
+        ];
     }
 }

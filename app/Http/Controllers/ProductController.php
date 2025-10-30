@@ -22,35 +22,35 @@ class ProductController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Product::create($request->validated());
+        $product = Product::create($request->validated());
 
-        return $model;
+        return $product;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $model)
+    public function show(Product $product)
     {
-        return $model;
+        return $product;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Product $model)
+    public function update(Update $request, Product $product)
     {
-        $model->update($request->validated());
+        $product->update($request->validated());
 
-        return $model;
+        return $product;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $model)
+    public function destroy(Product $product)
     {
-        $model->delete();
+        $product->delete();
 
         return response()->noContent();
     }

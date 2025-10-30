@@ -12,7 +12,7 @@
 */
 
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -44,4 +44,18 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function normalize_dates(array $data): array
+{
+    foreach ($data as $key => $value) {
+        if (is_array($value)) {
+            $data[$key] = normalize_dates($value);
+        } elseif (is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}/', $value)) {
+            // convert to canonical format (truncate to startOfDay in UTC)
+            $data[$key] = \Carbon\Carbon::parse($value)->startOfDay()->toISOString();
+        }
+    }
+
+    return $data;
 }

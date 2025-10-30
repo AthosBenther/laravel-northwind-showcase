@@ -22,35 +22,35 @@ class {{ modelName }}Controller extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = {{ modelName }}::create($request->validated());
+        ${{ modelNameLC }} = {{ modelName }}::create($request->validated());
 
-        return $model;
+        return ${{ modelNameLC }};
     }
 
     /**
      * Display the specified resource.
      */
-    public function show({{ modelName }} $model)
+    public function show({{ modelName }} ${{ modelNameLC }})
     {
-        return $model;
+        return ${{ modelNameLC }};
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, {{ modelName }} $model)
+    public function update(Update $request, {{ modelName }} ${{ modelNameLC }})
     {
-        $model->update($request->validated());
+        ${{ modelNameLC }}->update($request->validated());
 
-        return $model;
+        return ${{ modelNameLC }};
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy({{ modelName }} $model)
+    public function destroy({{ modelName }} ${{ modelNameLC }})
     {
-        $model->delete();
+        ${{ modelNameLC }}->delete();
 
         return response()->noContent();
     }

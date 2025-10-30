@@ -22,35 +22,35 @@ class TerritoryController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Territory::create($request->validated());
+        $territory = Territory::create($request->validated());
 
-        return $model;
+        return $territory;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Territory $model)
+    public function show(Territory $territory)
     {
-        return $model;
+        return $territory;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Territory $model)
+    public function update(Update $request, Territory $territory)
     {
-        $model->update($request->validated());
+        $territory->update($request->validated());
 
-        return $model;
+        return $territory;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Territory $model)
+    public function destroy(Territory $territory)
     {
-        $model->delete();
+        $territory->delete();
 
         return response()->noContent();
     }

@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Shipper extends NorthwindModel
 {
     protected $primaryKey = 'ShipperID' ;
-    protected $fillable = 
+    protected $table = 'Shippers';
+    protected $fillable =
         [
-    "ShipperID",
-    "CompanyName",
-    "Phone"
-]
+            'ShipperID',
+            'CompanyName',
+            'Phone',
+        ]
+    ;
+
+    protected $casts =
+        [
+        ]
     ;
 }

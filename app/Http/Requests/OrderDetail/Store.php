@@ -22,9 +22,11 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-  'UnitPrice' => 'nullable',
-  'Quantity' => 'nullable|integer',
-  'Discount' => 'nullable|numeric',
-];
+            'OrderID' => 'prohibited',
+            'ProductID' => 'required|integer',
+            'UnitPrice' => 'required',
+            'Quantity' => 'required|integer',
+            'Discount' => 'required|numeric',
+        ];
     }
 }

@@ -1,31 +1,31 @@
 <?php
 
-use App\Models\Supplier;
 use function Pest\Laravel\{delete, get, post};
 use function Pest\Laravel\{put};
 
-describe('Supplier', function () {
+$testingId = null;
+
+describe('Supplier', function () use (&$testingId) {
     test('can index', function () {
         $response = get('api/suppliers');
 
         $response->assertStatus(200);
     });
 
-    test('can create', function () {
+    test('can create', function () use (&$testingId) {
         $testPayload = [
-  'SupplierID' => 'TESTDATA',
-  'CompanyName' => 'TESTDATA',
-  'ContactName' => 'TESTDATA',
-  'ContactTitle' => 'TESTDATA',
-  'Address' => 'TESTDATA',
-  'City' => 'TESTDATA',
-  'Region' => 'TESTDATA',
-  'PostalCode' => 'TESTDATA',
-  'Country' => 'TESTDATA',
-  'Phone' => 'TESTDATA',
-  'Fax' => 'TESTDATA',
-  'HomePage' => 'TESTDATA',
-];
+            'CompanyName' =>  fake()->sentence(),
+            'ContactName' =>  fake()->sentence(),
+            'ContactTitle' =>  fake()->sentence(),
+            'Address' =>  fake()->sentence(),
+            'City' =>  fake()->sentence(),
+            'Region' =>  fake()->sentence(),
+            'PostalCode' =>  fake()->sentence(),
+            'Country' =>  fake()->sentence(),
+            'Phone' =>  fake()->sentence(),
+            'Fax' =>  fake()->sentence(),
+            'HomePage' =>  fake()->sentence(),
+        ];
 
         $response = post('api/suppliers', $testPayload, [
             'Accept' => 'application/json',
@@ -35,34 +35,34 @@ describe('Supplier', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe($testPayload);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
+        $testingId = $responseData['Supplier'.'ID'];
     });
 
-    test('can read', function () {
-        $id = 'TESTPK';
-        $response = get("api/suppliers/$id");
+    test('can read', function () use (&$testingId) {
+        $response = get("api/suppliers/$testingId");
 
         $response->assertStatus(200);
+        $responseData = $response->json();
+        expect($responseData)->not()->toBe([]);
     });
 
-    test('can update', function () {
-        $id = 'TESTPK';
+    test('can update', function () use (&$testingId) {
         $testPayload = [
-  'SupplierID' => 'TESTDATA',
-  'CompanyName' => 'TESTDATA',
-  'ContactName' => 'TESTDATA',
-  'ContactTitle' => 'TESTDATA',
-  'Address' => 'TESTDATA',
-  'City' => 'TESTDATA',
-  'Region' => 'TESTDATA',
-  'PostalCode' => 'TESTDATA',
-  'Country' => 'TESTDATA',
-  'Phone' => 'TESTDATA',
-  'Fax' => 'TESTDATA',
-  'HomePage' => 'TESTDATA',
-];
+            'CompanyName' =>  fake()->sentence(),
+            'ContactName' =>  fake()->sentence(),
+            'ContactTitle' =>  fake()->sentence(),
+            'Address' =>  fake()->sentence(),
+            'City' =>  fake()->sentence(),
+            'Region' =>  fake()->sentence(),
+            'PostalCode' =>  fake()->sentence(),
+            'Country' =>  fake()->sentence(),
+            'Phone' =>  fake()->sentence(),
+            'Fax' =>  fake()->sentence(),
+            'HomePage' =>  fake()->sentence(),
+        ];
 
-        $response = put("api/suppliers/$id", $testPayload, [
+        $response = put("api/suppliers/$testingId", $testPayload, [
             'Accept' => 'application/json',
         ]);
 
@@ -70,16 +70,13 @@ describe('Supplier', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe([
-            'CustomerID' => 'TESTCUST',
-            ...$testPayload
-        ]);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
     });
 
-    test('can delete', function () {
+    test('can delete', function () use (&$testingId) {
         $id = 'TESTPK';
 
-        $response = delete("api/suppliers/$id", [
+        $response = delete("api/suppliers/$testingId", [
             'Accept' => 'application/json',
         ]);
 

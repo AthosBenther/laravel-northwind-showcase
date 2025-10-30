@@ -1,37 +1,35 @@
 <?php
 
-use App\Models\Employee;
 use function Pest\Laravel\{delete, get, post};
 use function Pest\Laravel\{put};
 
-describe('Employee', function () {
+$testingId = null;
+
+describe('Employee', function () use (&$testingId) {
     test('can index', function () {
         $response = get('api/employees');
 
         $response->assertStatus(200);
     });
 
-    test('can create', function () {
+    test('can create', function () use (&$testingId) {
         $testPayload = [
-  'EmployeeID' => 'TESTDATA',
-  'LastName' => 'TESTDATA',
-  'FirstName' => 'TESTDATA',
-  'Title' => 'TESTDATA',
-  'TitleOfCourtesy' => 'TESTDATA',
-  'BirthDate' => 'TESTDATA',
-  'HireDate' => 'TESTDATA',
-  'Address' => 'TESTDATA',
-  'City' => 'TESTDATA',
-  'Region' => 'TESTDATA',
-  'PostalCode' => 'TESTDATA',
-  'Country' => 'TESTDATA',
-  'HomePhone' => 'TESTDATA',
-  'Extension' => 'TESTDATA',
-  'Photo' => 'TESTDATA',
-  'Notes' => 'TESTDATA',
-  'ReportsTo' => 'TESTDATA',
-  'PhotoPath' => 'TESTDATA',
-];
+            'LastName' =>  fake()->sentence(),
+            'FirstName' =>  fake()->sentence(),
+            'Title' =>  fake()->sentence(),
+            'TitleOfCourtesy' =>  fake()->sentence(),
+            'BirthDate' =>  fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
+            'HireDate' =>  fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
+            'Address' =>  fake()->sentence(),
+            'City' =>  fake()->sentence(),
+            'Region' =>  fake()->sentence(),
+            'PostalCode' =>  fake()->sentence(),
+            'Country' =>  fake()->sentence(),
+            'HomePhone' =>  fake()->sentence(),
+            'Extension' =>  fake()->sentence(),
+            'Notes' =>  fake()->sentence(),
+            'PhotoPath' =>  fake()->sentence(),
+        ];
 
         $response = post('api/employees', $testPayload, [
             'Accept' => 'application/json',
@@ -41,40 +39,38 @@ describe('Employee', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe($testPayload);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
+        $testingId = $responseData['Employee'.'ID'];
     });
 
-    test('can read', function () {
-        $id = 'TESTPK';
-        $response = get("api/employees/$id");
+    test('can read', function () use (&$testingId) {
+        $response = get("api/employees/$testingId");
 
         $response->assertStatus(200);
+        $responseData = $response->json();
+        expect($responseData)->not()->toBe([]);
     });
 
-    test('can update', function () {
-        $id = 'TESTPK';
+    test('can update', function () use (&$testingId) {
         $testPayload = [
-  'EmployeeID' => 'TESTDATA',
-  'LastName' => 'TESTDATA',
-  'FirstName' => 'TESTDATA',
-  'Title' => 'TESTDATA',
-  'TitleOfCourtesy' => 'TESTDATA',
-  'BirthDate' => 'TESTDATA',
-  'HireDate' => 'TESTDATA',
-  'Address' => 'TESTDATA',
-  'City' => 'TESTDATA',
-  'Region' => 'TESTDATA',
-  'PostalCode' => 'TESTDATA',
-  'Country' => 'TESTDATA',
-  'HomePhone' => 'TESTDATA',
-  'Extension' => 'TESTDATA',
-  'Photo' => 'TESTDATA',
-  'Notes' => 'TESTDATA',
-  'ReportsTo' => 'TESTDATA',
-  'PhotoPath' => 'TESTDATA',
-];
+            'LastName' =>  fake()->sentence(),
+            'FirstName' =>  fake()->sentence(),
+            'Title' =>  fake()->sentence(),
+            'TitleOfCourtesy' =>  fake()->sentence(),
+            'BirthDate' =>  fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
+            'HireDate' =>  fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
+            'Address' =>  fake()->sentence(),
+            'City' =>  fake()->sentence(),
+            'Region' =>  fake()->sentence(),
+            'PostalCode' =>  fake()->sentence(),
+            'Country' =>  fake()->sentence(),
+            'HomePhone' =>  fake()->sentence(),
+            'Extension' =>  fake()->sentence(),
+            'Notes' =>  fake()->sentence(),
+            'PhotoPath' =>  fake()->sentence(),
+        ];
 
-        $response = put("api/employees/$id", $testPayload, [
+        $response = put("api/employees/$testingId", $testPayload, [
             'Accept' => 'application/json',
         ]);
 
@@ -82,16 +78,13 @@ describe('Employee', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe([
-            'CustomerID' => 'TESTCUST',
-            ...$testPayload
-        ]);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
     });
 
-    test('can delete', function () {
+    test('can delete', function () use (&$testingId) {
         $id = 'TESTPK';
 
-        $response = delete("api/employees/$id", [
+        $response = delete("api/employees/$testingId", [
             'Accept' => 'application/json',
         ]);
 

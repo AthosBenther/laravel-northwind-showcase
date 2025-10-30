@@ -22,8 +22,9 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-  'CompanyName' => 'nullable|string',
-  'Phone' => 'required|string',
-];
+            'ShipperID' => 'prohibited',
+            'CompanyName' => 'required|string',
+            'Phone' => 'nullable|string',
+        ];
     }
 }

@@ -22,9 +22,10 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-  'CategoryName' => 'required|string',
-  'Description' => 'required|string',
-  'Picture' => 'required',
-];
+            'CategoryID' => 'prohibited',
+            'CategoryName' => 'nullable|string',
+            'Description' => 'nullable|string',
+            'Picture' => 'nullable',
+        ];
     }
 }

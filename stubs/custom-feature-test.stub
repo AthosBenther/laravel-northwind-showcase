@@ -4,14 +4,16 @@ use App\Models\{{ modelName }};
 use function Pest\Laravel\{delete, get, post};
 use function Pest\Laravel\{put};
 
-describe('{{ modelName }}', function () {
+$testingId = null;
+
+describe('{{ modelName }}', function () use (&$testingId) {
     test('can index', function () {
         $response = get('api/{{ routeName }}');
 
         $response->assertStatus(200);
     });
 
-    test('can create', function () {
+    test('can create', function () use (&$testingId) {
         $testPayload = {{ createTestPayload }};
 
         $response = post('api/{{ routeName }}', $testPayload, [
@@ -22,21 +24,22 @@ describe('{{ modelName }}', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe($testPayload);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
+        $testingId = $responseData['{{ modelName }}'.'ID'];
     });
 
-    test('can read', function () {
-        $id = {{ testPK }};
-        $response = get("api/{{ routeName }}/$id");
+    test('can read', function () use (&$testingId)  {
+        $response = get("api/{{ routeName }}/$testingId");
 
         $response->assertStatus(200);
+        $responseData = $response->json();
+        expect($responseData)->not()->toBe([]);
     });
 
-    test('can update', function () {
-        $id = {{ testPK }};
+    test('can update', function () use (&$testingId){
         $testPayload = {{ updateTestPayload }};
 
-        $response = put("api/{{ routeName }}/$id", $testPayload, [
+        $response = put("api/{{ routeName }}/$testingId", $testPayload, [
             'Accept' => 'application/json',
         ]);
 
@@ -44,16 +47,13 @@ describe('{{ modelName }}', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe([
-            'CustomerID' => 'TESTCUST',
-            ...$testPayload
-        ]);
+        expect(normalize_dates($responseData))->toMatchArray(normalize_dates($testPayload));
     });
 
-    test('can delete', function () {
+    test('can delete', function () use (&$testingId) {
         $id = {{ testPK }};
 
-        $response = delete("api/{{ routeName }}/$id", [
+        $response = delete("api/{{ routeName }}/$testingId", [
             'Accept' => 'application/json',
         ]);
 

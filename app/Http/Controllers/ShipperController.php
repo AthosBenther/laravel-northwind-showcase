@@ -22,35 +22,35 @@ class ShipperController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Shipper::create($request->validated());
+        $shipper = Shipper::create($request->validated());
 
-        return $model;
+        return $shipper;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Shipper $model)
+    public function show(Shipper $shipper)
     {
-        return $model;
+        return $shipper;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Shipper $model)
+    public function update(Update $request, Shipper $shipper)
     {
-        $model->update($request->validated());
+        $shipper->update($request->validated());
 
-        return $model;
+        return $shipper;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Shipper $model)
+    public function destroy(Shipper $shipper)
     {
-        $model->delete();
+        $shipper->delete();
 
         return response()->noContent();
     }

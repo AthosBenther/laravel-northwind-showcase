@@ -22,35 +22,35 @@ class SupplierController extends NorthwindController
      */
     public function store(Store $request)
     {
-        $model = Supplier::create($request->validated());
+        $supplier = Supplier::create($request->validated());
 
-        return $model;
+        return $supplier;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $model)
+    public function show(Supplier $supplier)
     {
-        return $model;
+        return $supplier;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Update $request, Supplier $model)
+    public function update(Update $request, Supplier $supplier)
     {
-        $model->update($request->validated());
+        $supplier->update($request->validated());
 
-        return $model;
+        return $supplier;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Supplier $model)
+    public function destroy(Supplier $supplier)
     {
-        $model->delete();
+        $supplier->delete();
 
         return response()->noContent();
     }

@@ -2,31 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Employee extends NorthwindModel
 {
     protected $primaryKey = 'EmployeeID' ;
-    protected $fillable = 
+    protected $table = 'Employees';
+    protected $fillable =
         [
-    "EmployeeID",
-    "LastName",
-    "FirstName",
-    "Title",
-    "TitleOfCourtesy",
-    "BirthDate",
-    "HireDate",
-    "Address",
-    "City",
-    "Region",
-    "PostalCode",
-    "Country",
-    "HomePhone",
-    "Extension",
-    "Photo",
-    "Notes",
-    "ReportsTo",
-    "PhotoPath"
-]
+            'EmployeeID',
+            'LastName',
+            'FirstName',
+            'Title',
+            'TitleOfCourtesy',
+            'BirthDate',
+            'HireDate',
+            'Address',
+            'City',
+            'Region',
+            'PostalCode',
+            'Country',
+            'HomePhone',
+            'Extension',
+            'Photo',
+            'Notes',
+            'ReportsTo',
+            'PhotoPath',
+        ]
+    ;
+
+    protected $casts =
+        [
+            'BirthDate' => 'datetime',
+            'HireDate' => 'datetime',
+            'Photo' => 'App\\Casts\\BlobImageCast',
+            'ReportsTo' => 'integer',
+        ]
     ;
 }

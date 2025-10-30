@@ -2,18 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class OrderDetail extends NorthwindModel
 {
     protected $primaryKey = 'OrderID' ;
-    protected $fillable = 
+    protected $table = 'Order Details';
+    protected $fillable =
         [
-    "OrderID",
-    "ProductID",
-    "UnitPrice",
-    "Quantity",
-    "Discount"
-]
+            'OrderID',
+            'ProductID',
+            'UnitPrice',
+            'Quantity',
+            'Discount',
+        ]
+    ;
+
+    protected $casts =
+        [
+            'ProductID' => 'integer',
+            'Quantity' => 'integer',
+            'Discount' => 'float',
+        ]
     ;
 }

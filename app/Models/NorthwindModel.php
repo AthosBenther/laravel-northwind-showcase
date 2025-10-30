@@ -13,12 +13,6 @@ class NorthwindModel extends Model
     // //Northwind has no timestamps
     public $timestamps = false;
 
-    // Northwinds keys are user defined strings by default
-    protected $keyType = 'string';
-
-    // Northwinds keys are user defined strings by default, so no auto-increment...
-    public $incrementing = false;
-
     /**
      * Get the table associated with the model in PascalCase
      *

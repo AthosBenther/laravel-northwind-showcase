@@ -22,23 +22,24 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-  'LastName' => 'required|string',
-  'FirstName' => 'required|string',
-  'Title' => 'required|string',
-  'TitleOfCourtesy' => 'required|string',
-  'BirthDate' => 'required|date',
-  'HireDate' => 'required|date',
-  'Address' => 'required|string',
-  'City' => 'required|string',
-  'Region' => 'required|string',
-  'PostalCode' => 'required|string',
-  'Country' => 'required|string',
-  'HomePhone' => 'required|string',
-  'Extension' => 'required|string',
-  'Photo' => 'required',
-  'Notes' => 'required|string',
-  'ReportsTo' => 'required|integer',
-  'PhotoPath' => 'required|string',
-];
+            'EmployeeID' => 'prohibited',
+            'LastName' => 'nullable|string',
+            'FirstName' => 'nullable|string',
+            'Title' => 'nullable|string',
+            'TitleOfCourtesy' => 'nullable|string',
+            'BirthDate' => 'nullable|date',
+            'HireDate' => 'nullable|date',
+            'Address' => 'nullable|string',
+            'City' => 'nullable|string',
+            'Region' => 'nullable|string',
+            'PostalCode' => 'nullable|string',
+            'Country' => 'nullable|string',
+            'HomePhone' => 'nullable|string',
+            'Extension' => 'nullable|string',
+            'Photo' => 'nullable',
+            'Notes' => 'nullable|string',
+            'ReportsTo' => 'nullable|integer',
+            'PhotoPath' => 'nullable|string',
+        ];
     }
 }
