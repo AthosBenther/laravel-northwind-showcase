@@ -14,7 +14,7 @@ class ProductController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Product::paginate($request->per_page ?? 5);
+        return Product::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductController extends NorthwindController
      */
     public function show(Product $product)
     {
-        return $product;
+        return $product->toResource();
     }
 
     /**

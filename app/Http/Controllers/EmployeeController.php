@@ -14,7 +14,7 @@ class EmployeeController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Employee::paginate($request->per_page ?? 5);
+        return Employee::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class EmployeeController extends NorthwindController
      */
     public function show(Employee $employee)
     {
-        return $employee;
+        return $employee->toResource();
     }
 
     /**

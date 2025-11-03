@@ -14,7 +14,7 @@ class SupplierController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Supplier::paginate($request->per_page ?? 5);
+        return Supplier::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class SupplierController extends NorthwindController
      */
     public function show(Supplier $supplier)
     {
-        return $supplier;
+        return $supplier->toResource();
     }
 
     /**

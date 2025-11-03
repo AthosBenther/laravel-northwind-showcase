@@ -14,7 +14,7 @@ class {{ modelName }}Controller extends NorthwindController
      */
     public function index(Index $request)
     {
-        return {{ modelName }}::paginate($request->per_page ?? 5);
+        return {{ modelName }}::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class {{ modelName }}Controller extends NorthwindController
      */
     public function show({{ modelName }} ${{ modelNameLC }})
     {
-        return ${{ modelNameLC }};
+        return ${{ modelNameLC }}->toResource();
     }
 
     /**

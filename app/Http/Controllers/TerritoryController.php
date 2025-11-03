@@ -14,7 +14,7 @@ class TerritoryController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Territory::paginate($request->per_page ?? 5);
+        return Territory::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class TerritoryController extends NorthwindController
      */
     public function show(Territory $territory)
     {
-        return $territory;
+        return $territory->toResource();
     }
 
     /**

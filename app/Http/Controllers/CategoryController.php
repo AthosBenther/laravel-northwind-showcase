@@ -14,7 +14,7 @@ class CategoryController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Category::paginate($request->per_page ?? 5);
+        return Category::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryController extends NorthwindController
      */
     public function show(Category $category)
     {
-        return $category;
+        return $category->toResource();
     }
 
     /**

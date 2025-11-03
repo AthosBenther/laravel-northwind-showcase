@@ -14,7 +14,7 @@ class ShipperController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Shipper::paginate($request->per_page ?? 5);
+        return Shipper::paginate($request->per_page ?? 5)->toResourceCollection();
     }
 
     /**
@@ -32,7 +32,7 @@ class ShipperController extends NorthwindController
      */
     public function show(Shipper $shipper)
     {
-        return $shipper;
+        return $shipper->toResource();
     }
 
     /**

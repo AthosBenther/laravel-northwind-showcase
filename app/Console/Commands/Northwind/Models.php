@@ -63,6 +63,7 @@ class Models extends Command
                     $casts[$key] = 'integer';
                     break;
                 case 'REAL':
+                case 'NUMERIC':
                     $casts[$key] = 'float';
                     break;
                 case 'DATE':

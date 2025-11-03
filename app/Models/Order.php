@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class OrderDetail extends NorthwindModel
+class Order extends NorthwindModel
 {
     protected $primaryKey = 'OrderID';
     protected $table = 'Order Details';
