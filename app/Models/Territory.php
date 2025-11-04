@@ -19,4 +19,9 @@ class Territory extends NorthwindModel
             'RegionID' => 'integer',
         ]
     ;
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'RegionID');
+    }
 }
