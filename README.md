@@ -21,4 +21,12 @@ This project uses [Pest](https://pestphp.com/) as it's test suite. All its capab
 To assert all listed features works run `$ php artisan test`
 
 ## Features
-- Connects to the local Northwind sqlite database 
+### **Reverting `databes\northwind.db` to its original contents**
+Run `composer run-script download-db` to revert the database to its original contents
+
+### **Automatic Documentation and Swagger Generation**
+By using [Scramble](https://scramble.dedoc.co/) this project is capable of providing a clear and direct documentation without the need for custom code or little to no code commentary.
+
+The documentation is available on `/docs/api`.
+
+To generate a Swagger run `php artisan scramble:export`. It will generate the file on `./docs/laravel-northwind-showcase.json`
