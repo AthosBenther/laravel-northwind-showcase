@@ -15,7 +15,7 @@ class OrderDetailCollection extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return $this->collection->map(function ($item) {
+        return $this->resource->map(function ($item) {
             return [
                 'ProductID' => $item->ProductID,
                 'ProductName' => $item->ProductName,

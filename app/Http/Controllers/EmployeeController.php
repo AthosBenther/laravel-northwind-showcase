@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use App\Http\Resources\EmployeeCollection;
+use App\Http\Resources\EmployeeResource;
 use App\Http\Requests\Employee\Index;
 use App\Http\Requests\Employee\Store;
 use App\Http\Requests\Employee\Update;
@@ -10,45 +13,45 @@ use App\Models\Employee;
 class EmployeeController extends NorthwindController
 {
     /**
-     * Display a listing of the resource.
+     * Lists the Employee resources.
      */
-    public function index(Index $request)
+    public function index(Index $request): EmployeeCollection
     {
-        return Employee::paginate($request->per_page ?? 5)->toResourceCollection();
+        return new EmployeeCollection(Employee::paginate($request->per_page ?? 5));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creates a new Employee.
      */
-    public function store(Store $request)
+    public function store(Store $request): EmployeeResource
     {
         $employee = Employee::create($request->validated());
 
-        return $employee;
+        return new  EmployeeResource($employee);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Employee.
      */
-    public function show(Employee $employee)
+    public function show(Employee $employee): EmployeeResource
     {
-        return $employee->toResource();
+        return new  EmployeeResource($employee);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Employee.
      */
-    public function update(Update $request, Employee $employee)
+    public function update(Update $request, Employee $employee): EmployeeResource
     {
         $employee->update($request->validated());
 
-        return $employee;
+        return new EmployeeResource($employee);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroys the specified Employee.
      */
-    public function destroy(Employee $employee)
+    public function destroy(Employee $employee): Response
     {
         $employee->delete();
 

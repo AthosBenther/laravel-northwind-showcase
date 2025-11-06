@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Response;
 use App\Http\Requests\Order\Index;
 use App\Http\Requests\Order\Store;
 use App\Http\Requests\Order\Update;
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Shipper;
@@ -12,17 +16,22 @@ use App\Models\Shipper;
 class OrderController extends NorthwindController
 {
     /**
-     * Display a listing of the resource.
+     * Lists existing Orders.
+     * 
+     * Returns a paginated list of Orders.
+     * 
+     * @param Index $request Default index request parameters.
+     * 
      */
-    public function index(Index $request)
+    public function index(Index $request): OrderCollection
     {
-        return Order::paginate($request->per_page ?? 5)->toResourceCollection();
+        return new OrderCollection(Order::paginate($request->per_page ?? 5));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Order.
      */
-    public function store(Store $request)
+    public function store(Store $request): OrderResource
     {
         $validated = $request->validated();
         $customer = Customer::find($request->input('CustomerID'));
@@ -39,21 +48,21 @@ class OrderController extends NorthwindController
         ];
         $order = Order::create($data);
 
-        return $order->toResource();
+        return new OrderResource($order);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Order.
      */
-    public function show(Order $order)
+    public function show(Order $order): OrderResource
     {
         return $order->toResource();
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Order.
      */
-    public function update(Update $request, Order $order)
+    public function update(Update $request, Order $order): OrderResource
     {
         $validated = $request->validated();
         $order->update($validated);
@@ -76,7 +85,10 @@ class OrderController extends NorthwindController
         return $order->toResource();
     }
 
-    public function commit(Order $order)
+    /**
+     * Commits the existing order.
+     */
+    public function commit(Order $order): OrderResource
     {
         if ($order->Details()->count() == 0)
             abort(400, 'Cannot commit an order with no products.');
@@ -100,7 +112,7 @@ class OrderController extends NorthwindController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): Response
     {
         $order->delete();
 

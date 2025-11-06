@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use App\Http\Resources\ShipperCollection;
+use App\Http\Resources\ShipperResource;
 use App\Http\Requests\Shipper\Index;
 use App\Http\Requests\Shipper\Store;
 use App\Http\Requests\Shipper\Update;
@@ -10,45 +13,45 @@ use App\Models\Shipper;
 class ShipperController extends NorthwindController
 {
     /**
-     * Display a listing of the resource.
+     * Lists the Shipper resources.
      */
-    public function index(Index $request)
+    public function index(Index $request): ShipperCollection
     {
-        return Shipper::paginate($request->per_page ?? 5)->toResourceCollection();
+        return new ShipperCollection(Shipper::paginate($request->per_page ?? 5));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creates a new Shipper.
      */
-    public function store(Store $request)
+    public function store(Store $request): ShipperResource
     {
         $shipper = Shipper::create($request->validated());
 
-        return $shipper;
+        return new  ShipperResource($shipper);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Shipper.
      */
-    public function show(Shipper $shipper)
+    public function show(Shipper $shipper): ShipperResource
     {
-        return $shipper->toResource();
+        return new  ShipperResource($shipper);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Shipper.
      */
-    public function update(Update $request, Shipper $shipper)
+    public function update(Update $request, Shipper $shipper): ShipperResource
     {
         $shipper->update($request->validated());
 
-        return $shipper;
+        return new ShipperResource($shipper);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroys the specified Shipper.
      */
-    public function destroy(Shipper $shipper)
+    public function destroy(Shipper $shipper): Response
     {
         $shipper->delete();
 

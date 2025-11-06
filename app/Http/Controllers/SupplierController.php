@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use App\Http\Resources\SupplierCollection;
+use App\Http\Resources\SupplierResource;
 use App\Http\Requests\Supplier\Index;
 use App\Http\Requests\Supplier\Store;
 use App\Http\Requests\Supplier\Update;
@@ -10,45 +13,45 @@ use App\Models\Supplier;
 class SupplierController extends NorthwindController
 {
     /**
-     * Display a listing of the resource.
+     * Lists the Supplier resources.
      */
-    public function index(Index $request)
+    public function index(Index $request): SupplierCollection
     {
-        return Supplier::paginate($request->per_page ?? 5)->toResourceCollection();
+        return new SupplierCollection(Supplier::paginate($request->per_page ?? 5));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creates a new Supplier.
      */
-    public function store(Store $request)
+    public function store(Store $request): SupplierResource
     {
         $supplier = Supplier::create($request->validated());
 
-        return $supplier;
+        return new  SupplierResource($supplier);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Supplier.
      */
-    public function show(Supplier $supplier)
+    public function show(Supplier $supplier): SupplierResource
     {
-        return $supplier->toResource();
+        return new  SupplierResource($supplier);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Supplier.
      */
-    public function update(Update $request, Supplier $supplier)
+    public function update(Update $request, Supplier $supplier): SupplierResource
     {
         $supplier->update($request->validated());
 
-        return $supplier;
+        return new SupplierResource($supplier);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroys the specified Supplier.
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Supplier $supplier): Response
     {
         $supplier->delete();
 

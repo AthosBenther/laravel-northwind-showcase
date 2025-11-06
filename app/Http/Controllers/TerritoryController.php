@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use App\Http\Resources\TerritoryCollection;
+use App\Http\Resources\TerritoryResource;
 use App\Http\Requests\Territory\Index;
 use App\Http\Requests\Territory\Store;
 use App\Http\Requests\Territory\Update;
@@ -10,45 +13,45 @@ use App\Models\Territory;
 class TerritoryController extends NorthwindController
 {
     /**
-     * Display a listing of the resource.
+     * Lists the Territory resources.
      */
-    public function index(Index $request)
+    public function index(Index $request): TerritoryCollection
     {
-        return Territory::paginate($request->per_page ?? 5)->toResourceCollection();
+        return new TerritoryCollection(Territory::paginate($request->per_page ?? 5));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creates a new Territory.
      */
-    public function store(Store $request)
+    public function store(Store $request): TerritoryResource
     {
         $territory = Territory::create($request->validated());
 
-        return $territory;
+        return new  TerritoryResource($territory);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Territory.
      */
-    public function show(Territory $territory)
+    public function show(Territory $territory): TerritoryResource
     {
-        return $territory->toResource();
+        return new  TerritoryResource($territory);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Territory.
      */
-    public function update(Update $request, Territory $territory)
+    public function update(Update $request, Territory $territory): TerritoryResource
     {
         $territory->update($request->validated());
 
-        return $territory;
+        return new TerritoryResource($territory);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroys the specified Territory.
      */
-    public function destroy(Territory $territory)
+    public function destroy(Territory $territory): Response
     {
         $territory->delete();
 

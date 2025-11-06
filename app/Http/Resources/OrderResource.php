@@ -15,12 +15,9 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $response = [
             'OrderID' => $this->OrderID,
             'OrderDate' => $this->OrderDate,
-            'RequiredDate' => $this->RequiredDate,
-            'ShippedDate' => $this->ShippedDate,
-            'Freight' => $this->Freight,
             'ShipName' => $this->ShipName,
             'ShipAddress' => $this->ShipAddress,
             'ShipCity' => $this->ShipCity,
@@ -39,14 +36,23 @@ class OrderResource extends JsonResource
                 'LastName' => $this->employee?->LastName,
                 'Title' => $this->employee?->Title,
             ] : null,
-            'ShipVia' => $this->shipper,
-            'ProductsTotal' => $this->details->sum(function ($item) {
-                return $item->pivot->Quantity * $item->pivot->UnitPrice * (1 - $item->pivot->Discount);
-            }),
-            'TotalWithFreight' => $this->details->sum(function ($item) {
-                return $item->pivot->Quantity * $item->pivot->UnitPrice * (1 - $item->pivot->Discount);
-            }) + $this->Freight,
-            'Details' => new OrderDetailCollection($this->details->toResourceCollection()),
+            'Details' => new OrderDetailCollection($this->details),
         ];
+
+        if ($this->RequiredDate) {
+            array_merge($response, [
+                'RequiredDate' => $this->RequiredDate,
+                'ShippedDate' => $this->ShippedDate,
+                'Freight' => $this->Freight,
+                'ShipVia' => $this->shipper,
+                'ProductsTotal' => $this->details->sum(function ($item) {
+                    return $item->pivot->Quantity * $item->pivot->UnitPrice * (1 - $item->pivot->Discount);
+                }),
+                'TotalWithFreight' => $this->details->sum(function ($item) {
+                    return $item->pivot->Quantity * $item->pivot->UnitPrice * (1 - $item->pivot->Discount);
+                }) + $this->Freight,
+            ]);
+        }
+        return $response;
     }
 }
