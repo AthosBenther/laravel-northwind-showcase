@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'UnitPrice' => $this->UnitPrice,
             'UnitsInStock' => $this->UnitsInStock,
             'UnitsOnOrder' => $this->UnitsOnOrder,
-            // 'ReorderLevel' => $this->ReorderLevel,
+            'ReorderLevel' => $this->ReorderLevel,
             'Discontinued' => $this->Discontinued,
             'Category' => $this->category ? [
                 'CategoryID' => $this->category->CategoryID,
