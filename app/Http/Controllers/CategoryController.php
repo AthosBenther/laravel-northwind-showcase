@@ -25,9 +25,18 @@ class CategoryController extends NorthwindController
      */
     public function store(Store $request): CategoryResource
     {
-        $category = Category::create($request->validated());
+        $data = $request->validated();
+        unset($data['Picture']);
+        $category = Category::create($data);
 
-        return new  CategoryResource($category);
+        if ($request->hasFile('Picture'))
+            $category->Picture = file_get_contents($request->file('Picture')->getRealPath());
+        else
+            $category->Picture = null;
+
+        $category->save();
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -35,7 +44,7 @@ class CategoryController extends NorthwindController
      */
     public function show(Category $category): CategoryResource
     {
-        return new  CategoryResource($category);
+        return new CategoryResource($category);
     }
 
     /**

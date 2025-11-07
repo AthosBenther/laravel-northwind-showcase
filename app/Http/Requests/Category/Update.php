@@ -2,8 +2,16 @@
 
 namespace App\Http\Requests\Category;
 
+use Dedoc\Scramble\Attributes\SchemaName;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Update Category Request
+ * 
+ * Description
+ * 
+ */
+#[SchemaName("Update Category Request")]
 class Update extends FormRequest
 {
     /**
@@ -22,10 +30,14 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-            'CategoryID' => 'prohibited',
-            'CategoryName' => 'nullable|string',
+            'CategoryName' => 'string',
             'Description' => 'nullable|string',
-            'Picture' => 'nullable',
+            'Picture' => [
+                'nullable',
+                'file',
+                'mimetypes:image/jpeg,image/png,image/webp',
+                'max:2048',
+            ]
         ];
     }
 }

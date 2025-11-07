@@ -4,11 +4,10 @@ namespace App\Models;
 
 class Category extends NorthwindModel
 {
-    protected $primaryKey = 'CategoryID' ;
+    protected $primaryKey = 'CategoryID';
     protected $table = 'Categories';
     protected $fillable =
         [
-            'CategoryID',
             'CategoryName',
             'Description',
             'Picture',
@@ -20,4 +19,9 @@ class Category extends NorthwindModel
             'Picture' => 'App\\Casts\\BlobImageCast',
         ]
     ;
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'CategoryID', 'CategoryID');
+    }
 }

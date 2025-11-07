@@ -22,10 +22,14 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-            'CategoryID' => 'prohibited',
-            'CategoryName' => 'nullable|string',
+            'CategoryName' => 'string',
             'Description' => 'nullable|string',
-            'Picture' => 'nullable',
+            'Picture' => [
+                'nullable',
+                'file',
+                'mimetypes:image/jpeg,image/png,image/webp',
+                'max:2048',
+            ]
         ];
     }
 }

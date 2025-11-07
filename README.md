@@ -25,7 +25,7 @@ To assert all listed features works run `$ php artisan test`
 Run `composer run-script download-db` to revert the database to its original contents
 
 ### **Automatic Documentation and Swagger Generation**
-By using [Scramble](https://scramble.dedoc.co/) this project is capable of providing a clear and direct documentation without the need for custom code or little to no code commentary.
+By using [Scramble](https://scramble.dedoc.co/) this project is capable of providing a clear and direct documentation with little to no the need for custom code or commentary.
 
 The documentation is available on `/docs/api`.
 
