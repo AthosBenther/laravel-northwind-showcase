@@ -28,7 +28,6 @@ describe('Employee', function () use (&$testingId) {
             'HomePhone' =>  fake()->sentence(),
             'Extension' =>  fake()->sentence(),
             'Notes' =>  fake()->sentence(),
-            'PhotoPath' =>  fake()->sentence(),
         ];
 
         $response = post('api/employees', $testPayload, [
@@ -67,7 +66,6 @@ describe('Employee', function () use (&$testingId) {
             'HomePhone' =>  fake()->sentence(),
             'Extension' =>  fake()->sentence(),
             'Notes' =>  fake()->sentence(),
-            'PhotoPath' =>  fake()->sentence(),
         ];
 
         $response = put("api/employees/$testingId", $testPayload, [

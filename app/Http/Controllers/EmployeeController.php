@@ -35,7 +35,7 @@ class EmployeeController extends NorthwindController
      */
     public function show(Employee $employee): EmployeeResource
     {
-        return new  EmployeeResource($employee);
+        return new EmployeeResource($employee);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Employee extends NorthwindModel
 {
-    protected $primaryKey = 'EmployeeID' ;
+    protected $primaryKey = 'EmployeeID';
     protected $table = 'Employees';
     protected $fillable =
         [
@@ -37,4 +37,9 @@ class Employee extends NorthwindModel
             'ReportsTo' => 'integer',
         ]
     ;
+
+    public function reportsTo()
+    {
+        return $this->belongsTo(self::class, 'ReportsTo', 'EmployeeID');
+    }
 }
