@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class Update extends FormRequest
 {
@@ -46,7 +47,15 @@ class Update extends FormRequest
                 'nullable',
                 'integer',
                 'exists:Employees,EmployeeID',
+                Rule::notIn([$this->route('employee')->EmployeeID])
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ReportsTo.not_in' => 'An employee cannot report to themselves.',
         ];
     }
 }
