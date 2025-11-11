@@ -9,6 +9,8 @@ use App\Http\Requests\Employee\Index;
 use App\Http\Requests\Employee\Store;
 use App\Http\Requests\Employee\Update;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EmployeeController extends NorthwindController
 {
@@ -25,9 +27,34 @@ class EmployeeController extends NorthwindController
      */
     public function store(Store $request): EmployeeResource
     {
-        $employee = Employee::create($request->validated());
+        $data = $request->validated();
+        unset($data['Photo']);
+        $employee = Employee::create($data);
 
-        return new  EmployeeResource($employee);
+        if ($request->hasFile('Photo')) {
+            $file = $request->file('Photo');
+
+            // Save binary blob to DB
+            $employee->Photo = file_get_contents($file->getRealPath());
+
+            // Generate random file name
+            $randomName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+
+            // Store file on disk
+            $path = $file->storeAs(
+                "images/employees",
+                $randomName,
+                'public'
+            );
+
+            // Store the storage path (or public URL)
+            $employee->PhotoPath = Storage::url($path);
+        } else
+            $employee->Photo = null;
+
+        $employee->save();
+
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -43,7 +70,32 @@ class EmployeeController extends NorthwindController
      */
     public function update(Update $request, Employee $employee): EmployeeResource
     {
-        $employee->update($request->validated());
+        $data = $request->validated();
+        unset($data['Photo']);
+        $employee->update($data);
+
+        if ($request->hasFile('Photo')) {
+            $file = $request->file('Photo');
+
+            // Save binary blob to DB
+            $employee->Photo = file_get_contents($file->getRealPath());
+
+            // Generate random file name
+            $randomName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+
+            // Store file on disk
+            $path = $file->storeAs(
+                "images/employees",
+                $randomName,
+                'public'
+            );
+
+            // Store the storage path (or public URL)
+            $employee->PhotoPath = Storage::url($path);
+        } else
+            $employee->Photo = null;
+
+        $employee->save();
 
         return new EmployeeResource($employee);
     }

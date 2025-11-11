@@ -30,9 +30,9 @@ class EmployeeResource extends JsonResource
             'Country' => $this->Country,
             'HomePhone' => $this->HomePhone,
             'Extension' => $this->Extension,
-            // 'Photo' => $this->Photo,
+            'Photo' => $this->Photo,
             'Notes' => $this->Notes,
-            // 'PhotoPath' => $this->PhotoPath,
+            'PhotoPath' => $this->PhotoPath,
 
             // include a *simplified* version of the manager to avoid recursion
             'ReportsTo' => $this->reportsTo ? [
