@@ -75,4 +75,4 @@ describe('Category', function () use (&$testingId) {
 
         $response->assertStatus(204);
     })->depends('can create');
-})->only();
+});
