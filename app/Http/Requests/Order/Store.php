@@ -22,7 +22,6 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-            'OrderID' => 'prohibited',
             'CustomerID' => 'required|string|exists:customers,CustomerID',
             'EmployeeID' => 'required|integer|exists:employees,EmployeeID',
             'ShipName' => 'nullable|string',
@@ -31,7 +30,6 @@ class Store extends FormRequest
             'ShipRegion' => 'nullable|string',
             'ShipPostalCode' => 'nullable|string',
             'ShipCountry' => 'nullable|string',
-            'Details' => 'prohibited',
         ];
     }
 }

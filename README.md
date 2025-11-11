@@ -14,6 +14,13 @@ Plans are to add laravel-controlled fixes for a v2, as deployment scripts and mi
 
 ## Requirements
 - PHP 8.4
+    - **Extensions:**
+    - curl
+    - fileinfo
+    - gd
+    - mbstring
+    - pdo_sqlite
+    - zip
 - Composer 2
   
 ## Instalation
