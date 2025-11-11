@@ -8,6 +8,13 @@ Most of the features and work around the Northwind's database quirks will be exp
 
 ## Requirements
 - PHP 8.4
+    - **Extensions:**
+    - curl
+    - fileinfo
+    - gd
+    - mbstring
+    - pdo_sqlite
+    - zip
 - Composer 2
   
 ## Instalation
