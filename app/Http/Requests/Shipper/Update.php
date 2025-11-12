@@ -22,7 +22,6 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-            'ShipperID' => 'prohibited',
             'CompanyName' => 'string',
             'Phone' => 'nullable|string',
         ];

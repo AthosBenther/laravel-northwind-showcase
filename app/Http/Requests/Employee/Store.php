@@ -27,7 +27,7 @@ class Store extends FormRequest
             'Title' => 'string|min:2',
             'TitleOfCourtesy' => 'string|min:2',
             'BirthDate' => 'required|date',
-            'HireDate' => 'required|date',
+            'HireDate' => 'required|date|after:BirthDate',
             'Address' => 'string|min:2',
             'City' => 'string|min:2',
             'Region' => 'string|min:2',

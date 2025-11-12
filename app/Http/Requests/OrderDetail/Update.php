@@ -22,7 +22,6 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-            'OrderID' => 'prohibited',
             'ProductID' => 'integer',
             'UnitPrice' => '',
             'Quantity' => 'integer',

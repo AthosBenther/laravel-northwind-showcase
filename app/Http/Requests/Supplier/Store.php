@@ -22,7 +22,6 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-            'SupplierID' => 'prohibited',
             'CompanyName' => 'required|string',
             'ContactName' => 'nullable|string',
             'ContactTitle' => 'nullable|string',
