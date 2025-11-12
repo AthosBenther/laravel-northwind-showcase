@@ -7,16 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use JsonSerializable;
 
-class CategoryCollection extends ResourceCollection
+class CustomerCollection extends ResourceCollection
 {
+    
     public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return $this->collection->map(
             function ($item) {
-                return [
-                    'CategoryID' => $item->CategoryID,
-                    'CategoryName' => $item->CategoryName
-                ];
+                return new CustomerResource($item);
             }
         );
     }

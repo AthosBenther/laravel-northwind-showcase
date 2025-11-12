@@ -11,7 +11,7 @@ class EmployeeResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+
      */
     public function toArray(Request $request): array
     {
@@ -33,8 +33,6 @@ class EmployeeResource extends JsonResource
             'Photo' => $this->Photo,
             'Notes' => $this->Notes,
             'PhotoPath' => $this->PhotoPath,
-
-            // include a *simplified* version of the manager to avoid recursion
             'ReportsTo' => $this->reportsTo ? [
                 'EmployeeID' => $this->reportsTo->EmployeeID,
                 'FirstName' => $this->reportsTo->FirstName,

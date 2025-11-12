@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
 
 class CategoryResource extends JsonResource
 {
@@ -11,13 +13,17 @@ class CategoryResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return [
             ...parent::toArray($request),
-            'Products' => (new ProductCollection($this->products))->select(['ProductID', 'ProductName'])
+            'Products' => $this->products->map(
+                fn($i) => [
+                    'ProductID' => $i->ProductID,
+                    'ProductName' => $i->ProductName
+                ]
+            )
         ];
     }
 }
