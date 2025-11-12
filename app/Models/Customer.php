@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+
 class Customer extends NorthwindModel
 {
     // Has to be declared as Northwind doesnt use 'id' by default
@@ -14,7 +16,6 @@ class Customer extends NorthwindModel
     public $incrementing = false;
 
     protected $fillable = [
-        'CustomerID',
         'CompanyName',
         'ContactName',
         'ContactTitle',
@@ -26,4 +27,15 @@ class Customer extends NorthwindModel
         'Phone',
         'Fax',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
 }

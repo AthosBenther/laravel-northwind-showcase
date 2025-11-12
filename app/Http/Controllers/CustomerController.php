@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\Index;
 use App\Http\Requests\Customer\Store;
 use App\Http\Requests\Customer\Update;
+use App\Http\Resources\CustomerCollection;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 
 class CustomerController extends NorthwindController
@@ -14,7 +16,7 @@ class CustomerController extends NorthwindController
      */
     public function index(Index $request)
     {
-        return Customer::paginate($request->per_page ?? 5);
+        return new CustomerCollection(Customer::paginate($request->per_page ?? 5));
     }
 
     /**
@@ -24,7 +26,7 @@ class CustomerController extends NorthwindController
     {
         $customer = Customer::create($request->validated());
 
-        return $customer;
+        return new CustomerResource($customer);
     }
 
     /**
@@ -32,7 +34,7 @@ class CustomerController extends NorthwindController
      */
     public function show(Customer $customer)
     {
-        return $customer;
+        return new CustomerResource($customer);
     }
 
     /**
@@ -42,7 +44,7 @@ class CustomerController extends NorthwindController
     {
         $customer->update($request->validated());
 
-        return $customer;
+        return new CustomerResource($customer);
     }
 
     /**

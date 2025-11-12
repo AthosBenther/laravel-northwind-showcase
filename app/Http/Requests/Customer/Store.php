@@ -22,7 +22,6 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-            'CustomerID' => 'required|string|min:5|max:8|unique:Customers,CustomerID',
             'CompanyName' => 'required|string|min:3|max:125',
             'ContactName' => 'required|string|min:3|max:125',
             'ContactTitle' => 'required|string|min:3|max:125',
