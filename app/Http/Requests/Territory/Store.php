@@ -22,7 +22,6 @@ class Store extends FormRequest
     public function rules(): array
     {
         return [
-            'TerritoryID' => 'prohibited',
             'TerritoryDescription' => 'required|string',
             'RegionID' => 'required|integer',
         ];

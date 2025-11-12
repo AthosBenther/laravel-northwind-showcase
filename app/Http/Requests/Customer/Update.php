@@ -22,7 +22,6 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-            'CustomerID' => 'prohibited',
             'CompanyName' => 'string|min:3|max:125',
             'ContactName' => 'string|min:3|max:125',
             'ContactTitle' => 'string|min:3|max:125',

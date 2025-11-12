@@ -29,7 +29,6 @@ class Update extends FormRequest
     public function rules(): array
     {
         return [
-            'OrderID' => 'prohibited',
             'CustomerID' => 'string|exists:customers,CustomerID',
             'EmployeeID' => 'integer|exists:employees,EmployeeID',
             'ShipName' => 'nullable|string',
