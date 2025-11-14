@@ -16,6 +16,6 @@ class ShipperResource extends JsonResource
      */
     public function toArray(Request $request): array | Arrayable | JsonSerializable
     {
-        return parent::toArray($request);
+        return $this->resource;
     }
 }

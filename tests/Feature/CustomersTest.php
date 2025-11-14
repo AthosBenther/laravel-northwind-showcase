@@ -4,16 +4,18 @@ use App\Models\Customer;
 use function Pest\Laravel\{delete, get, post};
 use function Pest\Laravel\{put};
 
-describe('Customer', function () {
+$testingId = null;
+
+describe('Customer', function () use (&$testingId) {
+
     test('can index', function () {
         $response = get('api/customers');
 
         $response->assertStatus(200);
     });
 
-    test('can create', function () {
+    test('can create', function () use (&$testingId) {
         $data = [
-            'CustomerID' => "TESTCUST",
             'CompanyName' => fake()->company(),
             'ContactName' => fake()->name(),
             'ContactTitle' => fake()->title(),
@@ -34,18 +36,18 @@ describe('Customer', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe($data);
+        expect($responseData)->toMatchArray($data);
+
+        $testingId = $responseData['CustomerID'];
     });
 
-    test('can read', function () {
-        $id = "TESTCUST";
-        $response = get("api/customers/$id");
+    test('can read', function () use (&$testingId) {
+        $response = get("api/customers/$testingId");
 
         $response->assertStatus(200);
     });
 
-    test('can update', function () {
-        $id = "TESTCUST";
+    test('can update', function () use (&$testingId) {
         $data = [
             'CompanyName' => fake()->company(),
             'ContactName' => fake()->name(),
@@ -59,7 +61,7 @@ describe('Customer', function () {
             'Fax' => fake()->phoneNumber()
         ];
 
-        $response = put("api/customers/$id", $data, [
+        $response = put("api/customers/$testingId", $data, [
             'Accept' => 'application/json',
         ]);
 
@@ -67,16 +69,13 @@ describe('Customer', function () {
 
         $responseData = $response->json();
 
-        expect($responseData)->toBe([
-            'CustomerID' => 'TESTCUST',
+        expect($responseData)->toMatchArray([
             ...$data
         ]);
     });
 
-    test('can delete', function () {
-        $id = "TESTCUST";
-
-        $response = delete("api/customers/$id", [
+    test('can delete', function () use (&$testingId) {
+        $response = delete("api/customers/$testingId", [
             'Accept' => 'application/json',
         ]);
 

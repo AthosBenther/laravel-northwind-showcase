@@ -18,15 +18,16 @@ describe('Employee', function () use (&$testingId) {
         $reportsToSomeone = fake()->boolean();
         $hasPhoto = fake()->boolean();
 
-
+        $birth = fake()->dateTimeBetween('-60 years', '-20 years');
+        $hire = fake()->dateTimeBetween($birth->modify('+18 years'), 'now');
 
         $testStaticPayload = [
             'LastName' => fake()->lastName($gender),
             'FirstName' => fake()->firstName($gender),
             'Title' => fake()->title($gender),
             'TitleOfCourtesy' => fake()->title($gender),
-            'BirthDate' => fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
-            'HireDate' => fake()->dateTime()->format('Y-m-d\\TH:i:s.u\\Z'),
+            'BirthDate' => $birth->format('Y-m-d\\TH:i:s.u\\Z'),
+            'HireDate' => $hire->format('Y-m-d\\TH:i:s.u\\Z'),
             'Address' => fake()->address(),
             'City' => fake()->city(),
             'Region' => fake()->sentence(),
