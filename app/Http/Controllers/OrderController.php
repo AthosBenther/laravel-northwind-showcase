@@ -71,12 +71,12 @@ class OrderController extends NorthwindController
         $validated = $request->validated();
         $order->load('details');
 
-        $requestedProductsIDs = collect($validated['Products'])->pluck('ProductID')->toArray();
+        $requestedProductsIDs = collect($validated['Details'] )->pluck('ProductID')->toArray();
         $requestedProducts = Product::whereIn('ProductID', $requestedProductsIDs)
             ->get()
             ->keyBy('ProductID');
 
-        $new = collect($validated['Products'])->pluck('Quantity', 'ProductID'); // new
+        $new = collect($validated['Details'] )->pluck('Quantity', 'ProductID'); // new
 
         $delta = $new->map(function ($qty, $id) use ($order) {
             $delta = $qty - ($order->details->where('ProductID', $id)->first()->pivot->Quantity ?? 0);
@@ -91,7 +91,7 @@ class OrderController extends NorthwindController
 
                 $stockErrors = [];
 
-                foreach ($validated['Products'] as $id => $reqProd) {
+                foreach ($validated['Details']  as $id => $reqProd) {
                     $product = $requestedProducts->find($reqProd['ProductID']);
 
                     $reqQty = $reqProd['Quantity'];
@@ -141,7 +141,7 @@ class OrderController extends NorthwindController
                 }
 
 
-                $products = collect($validated['Products'] ?? [])
+                $products = collect($validated['Details']  ?? [])
                     ->mapWithKeys(function ($product) use ($requestedProducts) {
                         $productData = $requestedProducts[$product['ProductID']];
                         return [

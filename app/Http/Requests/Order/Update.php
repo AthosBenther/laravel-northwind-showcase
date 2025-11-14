@@ -37,25 +37,25 @@ class Update extends FormRequest
             'ShipRegion' => 'nullable|string',
             'ShipPostalCode' => 'nullable|string',
             'ShipCountry' => 'nullable|string',
-            'Products' => 'array',
-            'Products.*.ProductID' => [
-                'required_with:Products',
+            'Details' => 'array',
+            'Details.*.ProductID' => [
+                'required_with:Details',
                 'integer',
                 'distinct',
                 'exists:products,ProductID',
                 Rule::exists('products', 'ProductID')->where(fn($q) => $q->where('Discontinued', false)),
             ],
-            'Products.*.Quantity' => 'required_with:Details|integer|min:1',
-            'Products.*.Discount' => 'required_with:Details|numeric',
+            'Details.*.Quantity' => 'required_with:Details|integer|min:1',
+            'Details.*.Discount' => 'numeric',
         ];
     }
 
     public function messages()
     {
         return [
-            'Products.*.ProductID.distinct' => 'Each product may only appear once in the order.',
-            'Products.*.ProductID.exists' => 'The selected product (:input) does not exist.',
-            'Products.*.ProductID.Rule::exists' => 'The selected product (:input) is discontinued.',
+            'Details.*.ProductID.distinct' => 'Each product may only appear once in the order.',
+            'Details.*.ProductID.exists' => 'The selected product (:input) does not exist.',
+            'Details.*.ProductID.Rule::exists' => 'The selected product (:input) is discontinued.',
         ];
     }
 }
